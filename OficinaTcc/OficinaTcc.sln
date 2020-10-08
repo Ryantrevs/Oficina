@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OficinaTcc", "OficinaTcc\OficinaTcc.csproj", "{D135CAE9-68AE-4D60-B766-61B9D81C6FC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D135CAE9-68AE-4D60-B766-61B9D81C6FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D135CAE9-68AE-4D60-B766-61B9D81C6FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D135CAE9-68AE-4D60-B766-61B9D81C6FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D135CAE9-68AE-4D60-B766-61B9D81C6FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3D61B94-226C-4870-9FDE-48E68EE85D97}
+	EndGlobalSection
+EndGlobal

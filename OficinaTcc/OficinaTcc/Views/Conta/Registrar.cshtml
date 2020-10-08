@@ -1,0 +1,19 @@
+﻿@model OficinaTcc.Models.ViewModel.RegistrarViewModel;
+
+<div>
+    <form asp-action="Registrar" method="POST">
+        <label>Username</label>
+        <input type="text" class="form-control" placeholder="Apelido" asp-for="UserName" />
+        <label>Nome</label>
+        <input type="text" class="form-control" placeholder="Nome Completo" asp-for="Nome" />
+        <label>Email</label>
+        <input type="email" class="form-control" placeholder="Email" asp-for="Email" />
+        <label>Data de nascimento</label>
+        <input type="date" class="form-control" placeholder="01/01/0001" asp-for="Nascimento" />
+        <label>Senha</label>
+        <input type="password" class="form-control" placeholder="Senha" asp-for="Senha" />
+        <label>Confirmar Senha</label>
+        <input type="password" class="form-control" placeholder="Confirmar Senha" />
+        <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg mt-4" value="Registrar" />
+    </form>
+</div>
