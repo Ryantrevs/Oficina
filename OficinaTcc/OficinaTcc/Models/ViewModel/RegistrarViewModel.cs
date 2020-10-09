@@ -9,6 +9,7 @@ namespace OficinaTcc.Models.ViewModel
     {
         public String UserName { get; set; }
         public String Nome { get; set; }
+        public String Telefone { get; set; }
         public String Email { get; set; }
         public DateTime Nascimento { get; set; }
         public String Senha { get; set; }

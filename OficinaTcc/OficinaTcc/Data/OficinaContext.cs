@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OficinaTcc.Data
 {
-    public class OficinaContext : IdentityDbContext<Usuario>
+    public class OficinaContext : IdentityDbContext<Funcionario>
     {
         public OficinaContext(DbContextOptions<OficinaContext> options):base(options)
         {
@@ -24,7 +24,6 @@ namespace OficinaTcc.Data
             builder.Entity<Venda>().HasKey(t => t.id);
             builder.Entity<Venda>().HasOne(t => t.Funcionario);
 
-            builder.Entity<Funcionario>().HasKey(t => t.Nome);
             builder.Entity<Funcionario>().HasMany(t => t.servicos);
         }
 

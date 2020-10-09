@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace OficinaTcc.Identity
 {
-    public class ClaimsUsuario : UserClaimsPrincipalFactory<Usuario>
+    public class ClaimsUsuario : UserClaimsPrincipalFactory<Funcionario>
     {
-        public ClaimsUsuario(UserManager<Usuario> userManager, IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor)
+        public ClaimsUsuario(UserManager<Funcionario> userManager, IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor)
         {
         }
-        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(Usuario user)
+        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(Funcionario user)
         {
             var identity = await base.GenerateClaimsAsync(user);
             return identity;

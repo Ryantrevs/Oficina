@@ -13,7 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OficinaTcc.Data;
 using OficinaTcc.Identity;
+using OficinaTcc.MailService;
 using OficinaTcc.Models;
+using OficinaTcc.Models.Repository;
 
 namespace OficinaTcc
 {
@@ -29,13 +31,14 @@ namespace OficinaTcc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddControllersWithViews();
 
             services.AddDbContext<OficinaContext>(option=> {
                 option.UseMySql(Configuration.GetConnectionString("OficinaContext"));
             });
 
-            services.AddIdentity<Usuario, IdentityRole>(Options =>
+            services.AddIdentity<Funcionario, IdentityRole>(Options =>
             {
                 Options.SignIn.RequireConfirmedEmail = true;
                 Options.Lockout.MaxFailedAccessAttempts = 3;
@@ -50,7 +53,11 @@ namespace OficinaTcc
                     opt.Cookie.Name = "Usuario";
                 });
 
-            services.AddScoped<IUserClaimsPrincipalFactory<Usuario>, ClaimsUsuario>();
+            services.AddScoped<IUserClaimsPrincipalFactory<Funcionario>, ClaimsUsuario>();
+
+            services.AddTransient<IServicoEmail, ServicoEmail>();
+
+            services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,12 +86,13 @@ namespace OficinaTcc
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
 
         public async Task CreateRole(IServiceProvider provider)
         {
             var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = provider.GetRequiredService<UserManager<Usuario>>();
+            var userManager = provider.GetRequiredService<UserManager<Funcionario>>();
             String[] roles = { "Gerente", "Funcionario" };
             IdentityResult resultado;
             foreach(var nomes in roles)

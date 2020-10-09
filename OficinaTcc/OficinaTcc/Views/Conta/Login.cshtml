@@ -1,0 +1,11 @@
+﻿@model OficinaTcc.Models.ViewModel.LoginViewModel
+
+<div>
+    <form asp-action="Login" method="POST" asp-controller="Conta">
+        <label>Apelido</label>
+        <input type="text" asp-for="Username" />
+        <label>Senha</label>
+        <input type="password" asp-for="Senha" />
+        <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg mt-4" value="Logar" />
+    </form>
+</div>

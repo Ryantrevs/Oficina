@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OficinaTcc.Migrations
 {
-    public partial class Criadoasentidadesebasedobd : Migration
+    public partial class Bancodedadosecriadoentidade : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,33 +20,6 @@ namespace OficinaTcc.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
-                    Nascimento = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,47 +58,6 @@ namespace OficinaTcc.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
@@ -141,12 +73,35 @@ namespace OficinaTcc.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                 });
 
             migrationBuilder.CreateTable(
@@ -161,12 +116,6 @@ namespace OficinaTcc.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,7 +127,7 @@ namespace OficinaTcc.Migrations
                     Responsavel = table.Column<string>(nullable: true),
                     Descricao = table.Column<string>(nullable: true),
                     Data = table.Column<DateTime>(nullable: false),
-                    FuncionarioNome = table.Column<string>(nullable: true)
+                    FuncionarioId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,19 +135,34 @@ namespace OficinaTcc.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionario",
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    Nome = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Nome = table.Column<string>(nullable: true),
+                    Nascimento = table.Column<DateTime>(nullable: false),
                     Funcao = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
                     ServicoId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionario", x => x.Nome);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funcionario_Servico_ServicoId",
+                        name: "FK_AspNetUsers_Servico_ServicoId",
                         column: x => x.ServicoId,
                         principalTable: "Servico",
                         principalColumn: "Id",
@@ -213,16 +177,16 @@ namespace OficinaTcc.Migrations
                     Cpf = table.Column<string>(nullable: true),
                     ProdutoId = table.Column<string>(nullable: true),
                     Valor = table.Column<double>(nullable: false),
-                    FuncionarioNome = table.Column<string>(nullable: true)
+                    FuncionarioId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Venda", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Venda_Funcionario_FuncionarioNome",
-                        column: x => x.FuncionarioNome,
-                        principalTable: "Funcionario",
-                        principalColumn: "Nome",
+                        name: "FK_Venda_AspNetUsers_FuncionarioId",
+                        column: x => x.FuncionarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Venda_Produto_ProdutoId",
@@ -270,19 +234,19 @@ namespace OficinaTcc.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionario_ServicoId",
-                table: "Funcionario",
+                name: "IX_AspNetUsers_ServicoId",
+                table: "AspNetUsers",
                 column: "ServicoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Servico_FuncionarioNome",
+                name: "IX_Servico_FuncionarioId",
                 table: "Servico",
-                column: "FuncionarioNome");
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Venda_FuncionarioNome",
+                name: "IX_Venda_FuncionarioId",
                 table: "Venda",
-                column: "FuncionarioNome");
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Venda_ProdutoId",
@@ -290,19 +254,51 @@ namespace OficinaTcc.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Servico_Funcionario_FuncionarioNome",
+                name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                table: "AspNetUserRoles",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                table: "AspNetUserTokens",
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Servico_AspNetUsers_FuncionarioId",
                 table: "Servico",
-                column: "FuncionarioNome",
-                principalTable: "Funcionario",
-                principalColumn: "Nome",
+                column: "FuncionarioId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Funcionario_Servico_ServicoId",
-                table: "Funcionario");
+                name: "FK_Servico_AspNetUsers_FuncionarioId",
+                table: "Servico");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -326,16 +322,13 @@ namespace OficinaTcc.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Produto");
 
             migrationBuilder.DropTable(
-                name: "Servico");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Funcionario");
+                name: "Servico");
         }
     }
 }

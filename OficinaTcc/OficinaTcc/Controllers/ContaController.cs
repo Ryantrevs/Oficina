@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OficinaTcc.MailService;
 using OficinaTcc.Models;
 using OficinaTcc.Models.ViewModel;
 
@@ -11,17 +13,19 @@ namespace OficinaTcc.Controllers
 {
     public class ContaController : Controller
     {
-        private readonly UserManager<Usuario> userManager;
-        private readonly IUserClaimsPrincipalFactory<Usuario> userClaimsPrincipalFactory;
-        private readonly SignInManager<Usuario> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        public ContaController(UserManager<Usuario> userManager,IUserClaimsPrincipalFactory<Usuario> userClaimsPrincipalFactory,
-            SignInManager<Usuario> signInManager,RoleManager<IdentityRole> roleManager)
+        private readonly Microsoft.AspNetCore.Identity.UserManager<Funcionario> userManager;
+        private readonly IUserClaimsPrincipalFactory<Funcionario> userClaimsPrincipalFactory;
+        private readonly SignInManager<Funcionario> signInManager;
+        private readonly IServicoEmail service;
+        private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager;
+        public ContaController(Microsoft.AspNetCore.Identity.UserManager<Funcionario> userManager,IUserClaimsPrincipalFactory<Funcionario> userClaimsPrincipalFactory,
+            SignInManager<Funcionario> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager,IServicoEmail service)
         {
             this.userManager = userManager;
             this.userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
+            this.service = service;
         }
         public IActionResult Login()
         {
@@ -42,12 +46,16 @@ namespace OficinaTcc.Controllers
                         if (result.Succeeded)
                         {
                             await signInManager.SignInAsync(user, true);
-                            return RedirectToAction("Perfil", "Financeiro");//REDIRECIONAR PRA ONDE?
+                            return RedirectToAction("ListaDeUsuario","Funcionario");//REDIRECIONAR PRA ONDE?
                         }
                         ModelState.AddModelError("", "Senha Inválida");
+                        return View();
                     }
+                    ModelState.AddModelError("", "Por favor cheque seu email, a conta ainda não foi confirmada");
+                    return View();
                 }
                 ModelState.AddModelError("", "usuário não existe");
+                return View();
             }
             return View();
         }
@@ -62,22 +70,23 @@ namespace OficinaTcc.Controllers
             var email = await userManager.FindByEmailAsync(model.Email);
             if (user == null && email == null)
             {
-                user = new Usuario()
+                user = new Funcionario()
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = model.UserName,
                     Email = model.Email,
                     Nome = model.Nome,
-                    Nascimento = model.Nascimento
+                    Nascimento = model.Nascimento,
+                    PhoneNumber = model.Telefone
                 };
                 var result = await userManager.CreateAsync(user, model.Senha);
                 if (result.Succeeded)
                 {
                     var role = await roleManager.FindByNameAsync("Funcionario");
-                    IdentityResult resultado = await userManager.AddToRoleAsync(user,role.ToString());
+                    Microsoft.AspNetCore.Identity.IdentityResult resultado = await userManager.AddToRoleAsync(user,role.ToString());
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var confirmacao = Url.Action("ConfirmEmail", "Conta", new { token, user.Email }, Request.Scheme);
-                    //EmailConfirmacao(confirmacao, user);
+                    var confirmacao = Url.Action("Confirmacao", "Conta", new { token, user.Email }, Request.Scheme);
+                    ConfirmarEmail(token, user);
                     return View("ConfirmarEmail");
                 }
             }
@@ -96,7 +105,7 @@ namespace OficinaTcc.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(String token, string email)
+        public async Task<IActionResult> Confirmacao(String token, string email)
         {
             var user = await userManager.FindByEmailAsync(email);
             if (user != null)
@@ -114,6 +123,11 @@ namespace OficinaTcc.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        private void ConfirmarEmail(string token, Funcionario user)
+        {
+            var confirmacao = new IdentityMessage() { Destination = user.Email, Body = "Use o link abaixo para confirmar seu email\n" + token, Subject = "Bem Vindo ao ThinkingMoney" };
+            service.SendAsync(confirmacao);
         }
     }
 }

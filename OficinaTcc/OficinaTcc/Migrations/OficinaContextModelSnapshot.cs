@@ -147,73 +147,6 @@ namespace OficinaTcc.Migrations
 
             modelBuilder.Entity("OficinaTcc.Models.Funcionario", b =>
                 {
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Funcao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("ServicoId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Telefone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Nome");
-
-                    b.HasIndex("ServicoId");
-
-                    b.ToTable("Funcionario");
-                });
-
-            modelBuilder.Entity("OficinaTcc.Models.Produto", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<double>("Preco")
-                        .HasColumnType("double");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Produto");
-                });
-
-            modelBuilder.Entity("OficinaTcc.Models.Servico", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("FuncionarioNome")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Responsavel")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FuncionarioNome");
-
-                    b.ToTable("Servico");
-                });
-
-            modelBuilder.Entity("OficinaTcc.Models.Usuario", b =>
-                {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
@@ -230,6 +163,9 @@ namespace OficinaTcc.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Funcao")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -263,6 +199,9 @@ namespace OficinaTcc.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("ServicoId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -279,7 +218,55 @@ namespace OficinaTcc.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
+                    b.HasIndex("ServicoId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("OficinaTcc.Models.Produto", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("double");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Produto");
+                });
+
+            modelBuilder.Entity("OficinaTcc.Models.Servico", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("FuncionarioId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Responsavel")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("nome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FuncionarioId");
+
+                    b.ToTable("Servico");
                 });
 
             modelBuilder.Entity("OficinaTcc.Models.Venda", b =>
@@ -290,7 +277,7 @@ namespace OficinaTcc.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("FuncionarioNome")
+                    b.Property<string>("FuncionarioId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ProdutoId")
@@ -301,7 +288,7 @@ namespace OficinaTcc.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("FuncionarioNome");
+                    b.HasIndex("FuncionarioId");
 
                     b.HasIndex("ProdutoId");
 
@@ -319,7 +306,7 @@ namespace OficinaTcc.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OficinaTcc.Models.Usuario", null)
+                    b.HasOne("OficinaTcc.Models.Funcionario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -328,7 +315,7 @@ namespace OficinaTcc.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OficinaTcc.Models.Usuario", null)
+                    b.HasOne("OficinaTcc.Models.Funcionario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -343,7 +330,7 @@ namespace OficinaTcc.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OficinaTcc.Models.Usuario", null)
+                    b.HasOne("OficinaTcc.Models.Funcionario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -352,7 +339,7 @@ namespace OficinaTcc.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("OficinaTcc.Models.Usuario", null)
+                    b.HasOne("OficinaTcc.Models.Funcionario", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -370,14 +357,14 @@ namespace OficinaTcc.Migrations
                 {
                     b.HasOne("OficinaTcc.Models.Funcionario", null)
                         .WithMany("servicos")
-                        .HasForeignKey("FuncionarioNome");
+                        .HasForeignKey("FuncionarioId");
                 });
 
             modelBuilder.Entity("OficinaTcc.Models.Venda", b =>
                 {
                     b.HasOne("OficinaTcc.Models.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioNome");
+                        .HasForeignKey("FuncionarioId");
 
                     b.HasOne("OficinaTcc.Models.Produto", "Produto")
                         .WithMany()
