@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OficinaTcc.Data;
 using OficinaTcc.Identity;
-using OficinaTcc.MailService;
 using OficinaTcc.Models;
 using OficinaTcc.Models.Repository;
 
@@ -55,7 +54,7 @@ namespace OficinaTcc
 
             services.AddScoped<IUserClaimsPrincipalFactory<Funcionario>, ClaimsUsuario>();
 
-            services.AddTransient<IServicoEmail, ServicoEmail>();
+        
 
             services.AddTransient<IFuncionarioRepository, FuncionarioRepository>();
         }
@@ -86,6 +85,7 @@ namespace OficinaTcc
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            //CreateRole(serviceProvider).Wait();
 
         }
 

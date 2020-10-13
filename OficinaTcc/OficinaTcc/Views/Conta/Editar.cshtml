@@ -1,0 +1,20 @@
+﻿@model OficinaTcc.Models.Funcionario
+
+<section>
+    <form method="POST" asp-action="Editar">
+        <label>Nome</label>
+        <input type="text" readonly value="@Model.Nome"/>
+        <label>Contato</label>
+        <input type="text" readonly value="@Model.PhoneNumber" />
+        <label>E-mail</label>
+        <input type="text" readonly value="@Model.Email" />
+        <label>Data de nascimento</label>
+        <input type="text" readonly value="@Model.Nascimento.ToShortDateString()" />
+        <label>Cargo</label>
+        <select asp-for="@Model.Funcao">
+            <option value="Funcionario">Funcionário</option>
+            <option value="Gerente">Gerente</option>
+        </select>
+        <button type="submit"/>
+    </form>
+</section>

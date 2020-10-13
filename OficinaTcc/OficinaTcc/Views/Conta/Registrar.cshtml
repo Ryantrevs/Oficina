@@ -2,6 +2,7 @@
 
 <div>
     <form asp-action="Registrar" method="POST">
+        @Html.ValidationSummary()
         <label>Username</label>
         <input type="text" class="form-control" placeholder="Apelido" asp-for="UserName" />
         <label>Nome</label>
